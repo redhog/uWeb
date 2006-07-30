@@ -1,0 +1,43 @@
+body {
+ display: table;
+ border-spacing: 15px;
+ padding: 0px;
+ margin: 0px;
+}
+
+.main {
+ display: table-cell;
+ border-style: solid;
+ border-width: 1px;
+ border-color: #000000;
+ padding: 10px;
+}
+
+.children {
+ border-style: solid;
+ border-width: 1px;
+ border-color: #000000; 
+ margin: 10px;
+}
+
+h1:first-child { margin-top: 0px; }
+
+dl.properties {
+ display: table;
+ border-spacing: 10px;
+}
+
+dl.properties > div {
+ display: table-row;
+}
+
+dl.properties > div > dt {
+ display: table-cell;
+ font-variant: small-caps;
+ vertical-align: top;
+}
+
+dl.properties > div > dd {
+ display: table-cell;
+ vertical-align: top;
+}

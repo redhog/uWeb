@@ -1,0 +1,17 @@
+.top-menu {
+ display: table-cell;
+ border-style: solid;
+ border-width: 1px;
+ border-color: #000000;
+ padding: 10px;
+}
+
+.top-menu ul {
+ margin: 0px;
+ padding: 0px;
+}
+
+.top-menu li {
+ list-style-type: none;
+ display: inline;
+}
