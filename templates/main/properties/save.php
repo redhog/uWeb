@@ -1,4 +1,6 @@
 <?php
+ require(findTemplateServerPath($_SERVER["PATH_INFO"], "conditions", $_GET["action"], "php"));
+
  unset($_POST["saveTypeButton"]);
  $names = array();
  $types = array();
