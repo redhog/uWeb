@@ -1,5 +1,13 @@
 <?php
 
+ session_start();
+ if (!isset($_SESSION['user']))
+  {
+   header("Status: 303 See Other");
+   header("Location: {$_SERVER['SCRIPT_NAME']}{$_SERVER['PATH_INFO']}?action=log-in");
+   exit(1);
+  }
+
 function mkdir_r($dirName, $rights=0777){
    $dirs = explode('/', $dirName);
    $dir='';
@@ -15,7 +23,7 @@ if ($_POST["saveTypeButton"] == "Add child")
  {
   createObject("{$_SERVER["PATH_INFO"]}/{$_POST["newChildName"]}");
   header("Status: 303 See Other");
-  header("Location: {$_SERVER["SCRIPT_NAME"]}{$_SERVER["PATH_INFO"]}/{$_POST["newChildName"]}?action=edit");
+  header("Location: {$_SERVER['SCRIPT_NAME']}{$_SERVER['PATH_INFO']}/{$_POST['newChildName']}?action=edit");
  }
 elseif ($_POST["saveTypeButton"] == "Save changes")
  {
@@ -54,7 +62,7 @@ elseif ($_POST["saveTypeButton"] == "Save changes")
     unset($_POST[$name]);
   setObjectProperties($_SERVER["PATH_INFO"], $_POST);
   header("Status: 303 See Other");
-  header("Location: {$_SERVER["SCRIPT_NAME"]}{$_SERVER["PATH_INFO"]}?action=edit");
+  header("Location: {$_SERVER['SCRIPT_NAME']}{$_SERVER['PATH_INFO']}?action=edit");
  }
 
 ?>

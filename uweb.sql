@@ -1,3 +1,4 @@
+drop table account;
 drop table object_property;
 drop table object_relation;
 drop table object;
@@ -37,6 +38,12 @@ create table object_property (
  value varchar not null
 );
 
+create table account (
+ id serial primary key not null,
+ name varchar not null,
+ password varchar not null
+);
+
 insert into property_type (name) values ('String');
 insert into property_type (name) values ('Integer');
 insert into property_type (name) values ('Real');
@@ -48,3 +55,4 @@ insert into object_relation select currval('object_id_seq'), '/', currval('objec
 
 insert into property (type, name) select property_type.id, 'Title' from property_type where property_type.name = 'String';
 insert into property (type, name) select property_type.id, 'Body' from property_type where property_type.name = 'String';
+insert into property (type, name) select property_type.id, 'Image' from property_type where property_type.name = 'File';

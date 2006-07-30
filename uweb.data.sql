@@ -1,3 +1,5 @@
+insert into account (name, password) values ('admin', 'saltgurka');
+
 insert into property (type, name) select property_type.id, 'Price' from property_type where property_type.name = 'real';
 insert into property (type, name) select property_type.id, 'Weight' from property_type where property_type.name = 'Real';
 insert into property (type, name) select property_type.id, 'Comment' from property_type where property_type.name = 'String';

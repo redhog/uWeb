@@ -1,12 +1,4 @@
 <?php
- session_start();
- if (!isset($_SESSION['user']))
-  {
-   header("Status: 303 See Other");
-   header("Location: {$_SERVER['SCRIPT_NAME']}{$_SERVER['PATH_INFO']}?action=log-in");
-   exit(1);
-  }
-
  $properties = getObjectProperties($_SERVER["PATH_INFO"]);
  $children = getObjectChildren($_SERVER["PATH_INFO"]);
 ?>
@@ -14,15 +6,15 @@
 <html>
  <head>
   <title><?php echo $properties['Title'][1]; ?></title>
-  <link href="<?php echo findTemplateClientPath($_SERVER["PATH_INFO"], "main", "edit", "css"); ?>" rel="stylesheet" type="text/css" />
+  <link href="<?php echo findTemplateClientPath($_SERVER["PATH_INFO"], "main", $_GET["action"], "css"); ?>" rel="stylesheet" type="text/css" />
   <link href="<?php echo findTemplateClientPath($_SERVER["PATH_INFO"], "top-menu", $_GET["action"], "css"); ?>" rel="stylesheet" type="text/css" />
   <link href="<?php echo findTemplateClientPath($_SERVER["PATH_INFO"], "menu", $_GET["action"], "css"); ?>" rel="stylesheet" type="text/css" />
   <link href="<?php echo findTemplateClientPath($_SERVER["PATH_INFO"], "object", $_GET["action"], "css"); ?>" rel="stylesheet" type="text/css" />
  </head>
 
  <body>
-  <?php require(findTemplateServerPath($_SERVER["PATH_INFO"], "top-menu", "edit", "php")); ?>
-  <?php require(findTemplateServerPath($_SERVER["PATH_INFO"], "menu", "edit", "php")); ?>
-  <?php require(findTemplateServerPath($_SERVER["PATH_INFO"], "object", "edit", "php")); ?>
+  <?php require(findTemplateServerPath($_SERVER["PATH_INFO"], "top-menu", $_GET["action"], "php")); ?>
+  <?php require(findTemplateServerPath($_SERVER["PATH_INFO"], "menu", $_GET["action"], "php")); ?>
+  <?php require(findTemplateServerPath($_SERVER["PATH_INFO"], "object", $_GET["action"], "php")); ?>
  </body>
 </html>

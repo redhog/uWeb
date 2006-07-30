@@ -1,4 +1,3 @@
-<link href="<?php echo findTemplateClientPath($_SERVER["PATH_INFO"], "menu", "view", "css"); ?>" rel="stylesheet" type="text/css" />
 <div class="menu">
  <h1>Main menu</h1>
  <ul>
@@ -13,5 +12,6 @@
  <ul>
   <li><a href='<?php echo "{$_SERVER["SCRIPT_NAME"]}{$_SERVER["PATH_INFO"]}?action=view" ?>'>View</a></li>
   <li><a href='<?php echo "{$_SERVER["SCRIPT_NAME"]}{$_SERVER["PATH_INFO"]}?action=edit" ?>'>Edit</a></li>
+  <li><a href='<?php echo "{$_SERVER["SCRIPT_NAME"]}{$_SERVER["PATH_INFO"]}?action=log-out" ?>'>Log out</a></li>
  </ul>
 </div>
