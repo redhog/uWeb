@@ -1,6 +1,17 @@
 body {
- display: table;
- border-spacing: 15px;
  padding: 0px;
  margin: 0px;
+}
+
+table.window {
+ display: table;
+ border-spacing: 15px;
+}
+
+table.window td {
+ vertical-align: top;
+ border-style: solid;
+ border-width: 1px;
+ border-color: #000000;
+ padding: 10px;
 }

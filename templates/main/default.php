@@ -9,14 +9,31 @@
  <head>
   <title><?php echo $properties['Title'][1]; ?></title>
   <link href="<?php echo findTemplateClientPath($_SERVER["PATH_INFO"], "main", $_GET["action"], "css"); ?>" rel="stylesheet" type="text/css" />
+  <link href="<?php echo findTemplateClientPath($_SERVER["PATH_INFO"], "top-banner", $_GET["action"], "css"); ?>" rel="stylesheet" type="text/css" />
   <link href="<?php echo findTemplateClientPath($_SERVER["PATH_INFO"], "top-menu", $_GET["action"], "css"); ?>" rel="stylesheet" type="text/css" />
   <link href="<?php echo findTemplateClientPath($_SERVER["PATH_INFO"], "menu", $_GET["action"], "css"); ?>" rel="stylesheet" type="text/css" />
   <link href="<?php echo findTemplateClientPath($_SERVER["PATH_INFO"], "object", $_GET["action"], "css"); ?>" rel="stylesheet" type="text/css" />
  </head>
  <body>
-  
-  <?php require(findTemplateServerPath($_SERVER["PATH_INFO"], "top-menu", $_GET["action"], "php")); ?>
-  <?php require(findTemplateServerPath($_SERVER["PATH_INFO"], "menu", $_GET["action"], "php")); ?>
-  <?php require(findTemplateServerPath($_SERVER["PATH_INFO"], "object", $_GET["action"], "php")); ?>
+  <table class="window">
+   <tr>
+    <td colspan="2" class="top-banner">
+     <?php require(findTemplateServerPath($_SERVER["PATH_INFO"], "top-banner", $_GET["action"], "php")); ?>
+    </td>
+   </tr>
+   <tr>
+    <td rowspan="2" class="menu">
+     <?php require(findTemplateServerPath($_SERVER["PATH_INFO"], "menu", $_GET["action"], "php")); ?>
+    </td>
+    <td class="top-menu">
+     <?php require(findTemplateServerPath($_SERVER["PATH_INFO"], "top-menu", $_GET["action"], "php")); ?>
+    </td>
+   </tr>
+   <tr>
+    <td class="object">
+     <?php require(findTemplateServerPath($_SERVER["PATH_INFO"], "object", $_GET["action"], "php")); ?>
+    </td>
+   </tr>
+  </table>
  </body>
 </html>
