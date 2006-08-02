@@ -1,8 +1,9 @@
 <?php
 
 require("utils.php");
+require("config.php");
 
-$dbconn = pg_connect("dbname=uweb user=uweb password=saltgurka")
+$dbconn = pg_connect("dbname={$dbname} user={$dbuser} password={$dbpwd}")
  or die('Could not connect: ' . pg_last_error());
 
 $scriptDir = dirname($_SERVER["SCRIPT_FILENAME"]);
@@ -32,13 +33,14 @@ function findTemplateRecurse($path, $templateDir, $action, $type)
 
 function findTemplate($path, $template, $action, $type)
  {
-  if ($result = findTemplateRecurse($path, "/site-templates/" . $template, $action, $type))
-   return $result;
-  if ($result = findTemplateRecurse($path, "/templates/" . $template, $action, $type))
-   return $result;
-  if ($result = findTemplateRecurse($path, "/site-templates/" . $template, 'default', $type))
-   return $result;
-  return findTemplateRecurse($path, "/templates/" . $template, 'default', $type);
+  global $templatesdirs;
+  foreach ($templatesdirs as $templatesdir)
+   if ($result = findTemplateRecurse($path, "/{$templatesdir}/" . $template, $action, $type))
+    return $result;
+  foreach ($templatesdirs as $templatesdir)
+   if ($result = findTemplateRecurse($path, "/{$templatesdir}/" . $template, 'default', $type))
+    return $result;
+  return NULL;
  }
 
 function findTemplateServerPath($path, $template, $action, $type)
