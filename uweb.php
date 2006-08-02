@@ -1,20 +1,12 @@
 <?php
 
+require("utils.php");
+
 $dbconn = pg_connect("dbname=uweb user=uweb password=saltgurka")
  or die('Could not connect: ' . pg_last_error());
 
 $scriptDir = dirname($_SERVER["SCRIPT_FILENAME"]);
 $scriptDirUrl = dirname($_SERVER["SCRIPT_NAME"]);
-
-function beginsWith($str, $sub)
- {
-  return (substr($str, 0, strlen($sub)) === $sub);
- }
-
-function endsWith($str, $sub)
- {
-  return (substr($str, strlen($str) - strlen($sub)) === $sub);
- }
 
 function findTemplateRecurse($path, $templateDir, $action, $type)
  {
@@ -185,16 +177,37 @@ function getObjectProperties($path)
   return $result;
  }
 
-function getObjectChildren($path)
+function getObjectChildren($path, $attributes = array('Title'))
  {
   global $dbconn;
 
   $path = pg_escape_string($path);
-  $rows = pg_query($dbconn, "select child.path, object_property.value from object_relation as current, object_relation as child, object_property, property where current.path='{$path}' and child.parent = current.object and object_property.object = child.object and object_property.property = property.id and property.name = 'Title';")
+
+  $property_sqls = array();
+  foreach ($attributes as $property)
+   $property_sqls[] = "(select object_property.value" .
+                      "  from object_property, property" .
+                      "  where     object_property.object = child.object" .
+                      "        and object_property.property = property.id" .
+                      "        and property.name = '${property}'" .
+                      ") as {$property}";
+  $property_sql = '';
+  if (count($property_sqls) > 0)
+   $property_sql = ', ' . implode(', ', $property_sqls);
+  
+  $sql = "select child.path {$property_sql}" .
+         " from object_relation as current, object_relation as child" .
+         " where     current.path='{$path}'" .
+         "       and child.parent = current.object";
+
+  $rows = pg_query($dbconn, $sql)
    or die('Could query: ' . pg_last_error());
   $result = array();
   while ($row = pg_fetch_row($rows))
-   $result[$row[0]] = $row[1];
+   {
+    $path = array_shift($row);
+    $result[$path] = array_combine($attributes, $row);
+   }
   return $result;
  }
 

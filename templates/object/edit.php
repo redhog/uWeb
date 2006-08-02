@@ -1,3 +1,7 @@
+<?php
+ $properties = getObjectProperties($_SERVER["PATH_INFO"]);
+ $children = getObjectChildren($_SERVER["PATH_INFO"], array('Visible', 'Title', 'Icon'));
+?>
 <div class="object">
  <form action="<?php echo $_SERVER["SCRIPT_NAME"] . $_SERVER["PATH_INFO"] ?>?action=save" method="post" enctype="multipart/form-data">
   <h1><input name="Title" type="text" value="<?php echo $properties['Title'][1]; ?>" /></h1>
@@ -47,10 +51,15 @@
  <h1>Children</h1>
  <ul>
   <?php
-
-   foreach ($children as $path => $title)
+   foreach ($children as $path => $attributes)
     {
-     echo "<li><a href='{$_SERVER["SCRIPT_NAME"]}{$path}?{$_SERVER["QUERY_STRING"]}'>{$title}</a></li>\n";
+     $cls = 'visible';
+     if ($attributes['Visible'] == 'no')
+      $cls = 'invisible';
+     if ($attributes['Icon'])
+      echo "<li class='{$cls}'><a href='{$_SERVER["SCRIPT_NAME"]}{$path}?{$_SERVER["QUERY_STRING"]}'><img class='icon' src='{$scriptDirUrl}/files{$attributes['Icon']}' alt=''/>{$attributes['Title']}</a></li>\n";
+     else
+      echo "<li class='{$cls}'><a href='{$_SERVER["SCRIPT_NAME"]}{$path}?{$_SERVER["QUERY_STRING"]}'>{$attributes['Title']}</a></li>\n";
     }
   ?>
   <li>

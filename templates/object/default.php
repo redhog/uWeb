@@ -1,3 +1,7 @@
+<?php
+ $properties = getObjectProperties($_SERVER["PATH_INFO"]);
+ $children = getObjectChildren($_SERVER["PATH_INFO"], array('Visible', 'Title', 'Icon'));
+?>
 <div class="object">
  <img class="image" src="<?php echo "{$scriptDirUrl}/files{$properties['Image'][1]}"; ?>" alt="" />
  <h1><?php echo $properties['Title'][1]; ?></h1>
@@ -21,13 +25,23 @@
 </div>
 <div class="children">
  <h1>Children</h1>
- <ul>
+ <table>
   <?php
 
-   foreach ($children as $path => $title)
-    {
-     echo "<li><a href='{$_SERVER["SCRIPT_NAME"]}{$path}?{$_SERVER["QUERY_STRING"]}'>{$title}</a></li>\n";
-    }
+   foreach ($children as $path => $attributes)
+    if ($attributes['Visible'] != 'no')
+     {
+      echo "<tr>\n";
+      $link = "{$_SERVER["SCRIPT_NAME"]}{$path}?{$_SERVER["QUERY_STRING"]}";
+
+      echo "<td>\n";
+      if ($attributes['Icon'])
+       echo "<a href='{$link}'><img class='icon' src='{$scriptDirUrl}/files{$attributes['Icon']}' alt=''/></a>\n";
+      echo "</td>\n";
+
+      echo "<td><a href='{$link}'>{$attributes['Title']}</a></td>\n";
+      echo "</tr>\n";
+     }
   ?>
- </ul>
+ </table>
 </div>

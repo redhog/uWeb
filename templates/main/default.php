@@ -1,7 +1,4 @@
 <?php
- $properties = getObjectProperties($_SERVER["PATH_INFO"]);
- $children = getObjectChildren($_SERVER["PATH_INFO"]);
-
  require(findTemplateServerPath($_SERVER["PATH_INFO"], "conditions", $_GET["action"], "php"));
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

@@ -1,10 +1,8 @@
 <h1>Main menu</h1>
 <ul>
  <?php
-  foreach (getObjectChildren('/') as $path => $title)
-   {
-    echo "<li><a href='{$_SERVER["SCRIPT_NAME"]}{$path}?{$_SERVER["QUERY_STRING"]}'>{$title}</a></li>\n";
-   }
+  foreach (getObjectChildren('/', array('Title')) as $path => $attributes)
+   echo "<li><a href='{$_SERVER["SCRIPT_NAME"]}{$path}?{$_SERVER["QUERY_STRING"]}'>{$attributes['Title']}</a></li>\n";
  ?>
 </ul>
 <h1>Actions</h1>
