@@ -1,11 +1,12 @@
 <div class="object">
+ <img class="image" src="<?php echo "{$scriptDirUrl}/files{$properties['Image'][1]}"; ?>" alt="" />
  <h1><?php echo $properties['Title'][1]; ?></h1>
  <?php echo $properties['Body'][1]; ?>
  <dl class="properties">
   <?php
    foreach ($properties as $name => $value)
     {
-     if ($name != "Title" && $name != "Body")
+     if ($name != "Title" && $name != "Body" && $name != "Image")
       if ($value[0] != 'File')
        echo "<div><dt>{$name}</dt><dd>{$value[1]}</dd></div>";
      elseif (   endsWith($value[1], '.jpg')

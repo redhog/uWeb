@@ -1,9 +1,9 @@
 <ul class="top-menu">
  <?php
   $items = explode('/', $_SERVER["PATH_INFO"]);
-  unset($path[0]);
+  unset($items[0]);
   $path = '';
-  echo "<li><a href='{$_SERVER["SCRIPT_NAME"]}/?{$_SERVER["QUERY_STRING"]}'>/</a></li>\n";
+  echo "<li><a href='{$_SERVER["SCRIPT_NAME"]}/?{$_SERVER["QUERY_STRING"]}'>Home</a></li>\n";
   foreach ($items as $item)
    {
     $path .= '/' . $item;

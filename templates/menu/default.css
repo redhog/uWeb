@@ -1,3 +1,7 @@
+td.menu {
+ height: 100%;
+}
+
 .menu ul {
  margin: 0px;
  padding: 0px;

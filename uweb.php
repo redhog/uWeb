@@ -16,41 +16,49 @@ function endsWith($str, $sub)
   return (substr($str, strlen($str) - strlen($sub)) === $sub);
  }
 
-function findTemplateRecurse($path, $template, $action, $type)
+function findTemplateRecurse($path, $templateDir, $action, $type)
  {
   global $scriptDir;
+
   if (!beginsWith($path, '/')) $path = '/' . $path; // Handle nasty cases...
-  $templateDir = $scriptDir . "/templates/" . $template;
-  while ($path != '/')
+
+
+  $template = $templateDir . $path . '/nonrecursive.' . $action . '.' . $type;
+  if (file_exists($scriptDir . $template))
+   return $template;
+  while (true)
    {
-    $template = $path . '/' . $action . '.' . $type;
-    if (file_exists($templateDir . $template))
+    $concpath = $path; if ($path != '/') $concpath .= '/';
+    $template = $templateDir . $concpath . $action . '.' . $type;
+    if (file_exists($scriptDir . $template))
      return $template;
+    if ($path == '/')
+     return NULL;
     $path = dirname($path);
    }
-  $template = '/' . $action . '.' . $type;
-  if (file_exists($templateDir . $template))
-   return $template;
-  return NULL;
  }
 
 function findTemplate($path, $template, $action, $type)
  {
-  $result = findTemplateRecurse($path, $template, $action, $type);
-  if ($result) return $result;
-  return findTemplateRecurse($path, $template, 'default', $type);
+  if ($result = findTemplateRecurse($path, "/site-templates/" . $template, $action, $type))
+   return $result;
+  if ($result = findTemplateRecurse($path, "/templates/" . $template, $action, $type))
+   return $result;
+  if ($result = findTemplateRecurse($path, "/site-templates/" . $template, 'default', $type))
+   return $result;
+  return findTemplateRecurse($path, "/templates/" . $template, 'default', $type);
  }
 
 function findTemplateServerPath($path, $template, $action, $type)
  {
   global $scriptDir;
-  return $scriptDir . "/templates/" . $template . findTemplate($path, $template, $action, $type);
+  return $scriptDir . findTemplate($path, $template, $action, $type);
  }
 
 function findTemplateClientPath($path, $template, $action, $type)
  {
   global $scriptDirUrl;
-  return $scriptDirUrl . "/templates/" . $template . findTemplate($path, $template, $action, $type);
+  return $scriptDirUrl . findTemplate($path, $template, $action, $type);
  }
 
 function getPropertyTypes()

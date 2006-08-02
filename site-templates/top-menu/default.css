@@ -1,0 +1,33 @@
+td.top-menu {
+ background: #3e57b4;
+}
+
+ul.top-menu {
+ margin: 0px;
+ padding: 0px;
+}
+
+ul.top-menu li {
+ list-style-type: none;
+ display: inline;
+}
+
+ul.top-menu li:first-child:before {
+ content: "";
+}
+ul.top-menu li:before {
+ color: #ffffff;
+ content: " > ";
+}
+
+.top-menu a:visited {
+ color: #ffffff;
+ font-family: sans-serif;
+ text-decoration: none;
+}
+
+.top-menu a:link {
+ color: #ffffff;
+ font-family: sans-serif;
+ text-decoration: none;
+}

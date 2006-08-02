@@ -1,3 +1,7 @@
+td.object {
+ height: 100%;
+}
+
 .children {
  border-style: solid;
  border-width: 1px;
@@ -6,6 +10,10 @@
 }
 
 h1:first-child { margin-top: 0px; }
+
+.image {
+ float: right;
+}
 
 dl.properties {
  display: table;

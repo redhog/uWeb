@@ -1,0 +1,27 @@
+@import url("default.css");
+
+input {
+ border-style: solid;
+ border-width: 1px;
+ border-color: #000000;
+ font-family: serif;
+}
+
+textarea {
+ border-style: solid;
+ border-width: 1px;
+ border-color: #000000;
+ font-family: serif;
+}
+
+select {
+ border-style: solid;
+ border-width: 1px;
+ border-color: #000000;
+ font-family: serif;
+}
+
+h1 input {
+ font-size: 24pt;
+}
+
