@@ -2,7 +2,7 @@
  $properties = getObjectProperties($_SERVER["PATH_INFO"]);
  $children = getObjectChildren($_SERVER["PATH_INFO"], array('Visible', 'Title', 'Icon'));
 ?>
-<div class="object">
+<div class="main">
  <form action="<?php echo $_SERVER["SCRIPT_NAME"] . $_SERVER["PATH_INFO"] ?>?action=save" method="post" enctype="multipart/form-data">
   <h1><input name="Title" type="text" value="<?php echo $properties['Title'][1]; ?>" /></h1>
   <textarea name="Body"><?php echo $properties['Body'][1]; ?></textarea>

@@ -213,5 +213,5 @@ function getObjectChildren($path, $attributes = array('Title'))
 
 $action = $_GET["action"];
 if (!$action) $action = 'view';
-require(findTemplateServerPath($_SERVER["PATH_INFO"], "main", $action, "php"));
+require(findTemplateServerPath($_SERVER["PATH_INFO"], "page", $action, "php"));
 ?>
