@@ -59,4 +59,5 @@ insert into property (type, name) select property_type.id, 'Visible' from proper
 
 insert into object default values;
 insert into object_relation select currval('object_id_seq'), '/', currval('object_id_seq');
+insert into object_property select currval('object_id_seq'), property.id, 'yes' from property where property.name = 'Visible';
 insert into object_property select currval('object_id_seq'), property.id, 'Home' from property where property.name = 'Title';

@@ -1,5 +1,4 @@
 <?php
- session_start();
  $user = pg_escape_string($_POST['user']);
  $pwd = pg_escape_string($_POST['password']);
  pg_fetch_row(pg_query($dbconn, "select * from account where name='{$user}' and password='{$pwd}'"))

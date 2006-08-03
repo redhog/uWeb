@@ -1,4 +1,7 @@
 <?php
+$scriptDir = dirname($_SERVER["SCRIPT_FILENAME"]);
+$scriptDirUrl = dirname($_SERVER["SCRIPT_NAME"]);
+
 if (!function_exists('array_combine')) {
    function array_combine($a, $b) {
        $c = array();

@@ -2,6 +2,9 @@
  $properties = objectProperties(anyObject(getObjects($_SERVER["PATH_INFO"],
 						     0)));
 ?>
+
+HOMEPAGE
+
 <img class="image" src="<?php echo "{$scriptDirUrl}/files{$properties['Image'][1]}"; ?>" alt="" />
 <h1><?php echo $properties['Title'][1]; ?></h1>
 <?php echo $properties['Body'][1]; ?>

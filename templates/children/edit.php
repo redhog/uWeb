@@ -1,25 +1,31 @@
 <?php
- $children = getObjectChildren($_SERVER["PATH_INFO"], array('Visible', 'Title', 'Icon'));
+ $children = getObjects($_SERVER["PATH_INFO"],
+			1,
+			array(),
+			array('Visible', 'Title', 'Icon'));
 ?>
 <h1>Children</h1>
 <table>
  <?php
 
-  foreach ($children as $path => $attributes)
+  foreach ($children as $id => $obj)
    {
+    $path = anyPath(objectPaths($obj));
+    $properties = objectProperties($obj);
+
     $cls = 'visible';
-    if ($attributes['Visible'] == 'no')
+    if ($properties['Visible'][1] != 'yes')
      $cls = 'invisible';
 
     echo "<tr class='$cls'>\n";
     $link = "{$_SERVER["SCRIPT_NAME"]}{$path}?{$_SERVER["QUERY_STRING"]}";
 
     echo "<td>\n";
-    if ($attributes['Icon'])
-     echo "<a href='{$link}'><img class='icon' src='{$scriptDirUrl}/files{$attributes['Icon']}' alt=''/></a>\n";
+    if ($properties['Icon'])
+     echo "<a href='{$link}'><img class='icon' src='{$scriptDirUrl}/files{$properties['Icon'][1]}' alt=''/></a>\n";
     echo "</td>\n";
 
-    echo "<td><a href='{$link}'>{$attributes['Title']}</a></td>\n";
+    echo "<td><a href='{$link}'>{$properties['Title'][1]}</a></td>\n";
     echo "</tr>\n";
    }
 
