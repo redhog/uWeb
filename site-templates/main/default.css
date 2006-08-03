@@ -60,3 +60,31 @@ dl.properties > div > dd {
  color: #ffffff;
 }
 
+table.front-page {
+ border-spacing: 15px;
+}
+
+.front-page td {
+ padding: 10px;
+ background-color: #1f3b9f;
+ color: #ffffff;
+ text-align: center;
+}
+
+.front-page img {
+ border-style: solid;
+ border-width: 3px;
+ border-color: #ffffff;
+}
+
+.front-page a:visited {
+ color: #ffffff;
+ font-family: sans-serif;
+ text-decoration: none;
+}
+
+.front-page a:link {
+ color: #ffffff;
+ font-family: sans-serif;
+ text-decoration: none;
+}

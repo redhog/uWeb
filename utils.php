@@ -3,16 +3,11 @@ $scriptDir = dirname($_SERVER["SCRIPT_FILENAME"]);
 $scriptDirUrl = dirname($_SERVER["SCRIPT_NAME"]);
 
 if (!function_exists('array_combine')) {
-   function array_combine($a, $b) {
-       $c = array();
-       if (is_array($a) && is_array($b))
-           while (list(, $va) = each($a))
-               if (list(, $vb) = each($b))
-                   $c[$va] = $vb;
-               else
-                   break 1;
-       return $c;
-   }
+ require_once 'PHP/Compat/Function/array_combine.php';
+}
+
+if (!function_exists('array_diff_key')) {
+ require_once 'PHP/Compat/Function/array_diff_key.php';
 }
 
 function beginsWith($str, $sub)

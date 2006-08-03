@@ -9,7 +9,7 @@
  <?php
   foreach ($properties as $name => $value)
    {
-    if ($name != "Title" && $name != "Body" && $name != "Image")
+    if ($name != 'Visible' && $name != 'Special' && $name != 'Front-page' && $name != "Title" && $name != "Body" && $name != "Image")
      if ($value[0] != 'File')
       echo "<div><dt>{$name}</dt><dd>{$value[1]}</dd></div>";
     elseif (   endsWith($value[1], '.jpg')

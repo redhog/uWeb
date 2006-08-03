@@ -51,11 +51,13 @@ insert into property_type (name) values ('Selection');
 insert into property_type (name) values ('Boolean');
 insert into property_type (name) values ('File');
 
+insert into property (type, name) select property_type.id, 'Visible' from property_type where property_type.name = 'Boolean';
 insert into property (type, name) select property_type.id, 'Title' from property_type where property_type.name = 'String';
 insert into property (type, name) select property_type.id, 'Body' from property_type where property_type.name = 'String';
 insert into property (type, name) select property_type.id, 'Icon' from property_type where property_type.name = 'File';
 insert into property (type, name) select property_type.id, 'Image' from property_type where property_type.name = 'File';
-insert into property (type, name) select property_type.id, 'Visible' from property_type where property_type.name = 'Boolean';
+insert into property (type, name) select property_type.id, 'Special' from property_type where property_type.name = 'Boolean';
+insert into property (type, name) select property_type.id, 'Front-page' from property_type where property_type.name = 'Boolean';
 
 insert into object default values;
 insert into object_relation select currval('object_id_seq'), '/', currval('object_id_seq');

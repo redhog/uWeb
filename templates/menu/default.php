@@ -1,16 +1,33 @@
 <h1>Main menu</h1>
 <ul>
  <?php
-  echo "<li><a href='{$_SERVER["SCRIPT_NAME"]}/?filter=Special:yes'>Specials</a></li>\n";
   $children = getObjects('/',
 			 1,
 			 array('Visible' => 'yes'),
 			 array('Title', 'Icon'));
+  $query = queryString(queryConstruct(array(), array('filter')));
   foreach ($children as $id => $obj)
    {
     $path = anyPath(objectPaths($obj));
     $properties = objectProperties($obj);
-    echo "<li><a href='{$_SERVER["SCRIPT_NAME"]}{$path}?{$_SERVER["QUERY_STRING"]}'>{$properties['Title'][1]}</a></li>\n";
+    echo "<li><a href='{$_SERVER["SCRIPT_NAME"]}{$path}?{$query}'>{$properties['Title'][1]}</a></li>\n";
+   }
+ ?>
+</ul>
+
+<h1>Specials</h1>
+<ul>
+ <?php
+  $children = getObjects('/',
+			 1,
+			 array('Visible' => 'yes', 'Special' => 'yes'),
+			 array('Title', 'Icon'));
+  $query = queryString(queryConstruct(array('filter' => 'Special:yes')));
+  foreach ($children as $id => $obj)
+   {
+    $path = anyPath(objectPaths($obj));
+    $properties = objectProperties($obj);
+    echo "<li><a href='{$_SERVER["SCRIPT_NAME"]}{$path}?{$query}'>{$properties['Title'][1]}</a></li>\n";
    }
  ?>
 </ul>
