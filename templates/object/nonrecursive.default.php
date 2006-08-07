@@ -14,9 +14,9 @@
     $properties = objectProperties($obj);
     $link = "{$_SERVER["SCRIPT_NAME"]}{$path}?{$_SERVER["QUERY_STRING"]}";
 
-    echo "<td>\n";
+    echo "<td class='front-page'>\n";
     if ($properties['Image'])
-     echo "<a href='{$link}'><img class='icon' src='{$scriptDirUrl}/files{$properties['Image'][1]}' alt=''/></a><br />\n";
+     echo "<a href='{$link}'><img class='icon' src='{$scriptDirUrl}/files{$properties['Image'][1]}' alt='' /></a><br />\n";
     echo "<a href='{$link}'>{$properties['Body'][1]}</a>\n";
     echo "</td>\n";
    }
@@ -24,24 +24,24 @@
 
   $properties = objectProperties(anyObject(getObjects($_SERVER["PATH_INFO"],
 						      0)));
-  echo "<td colspan='{$width}'>\n";
+  echo "<tr>\n";
+  echo "<td class='front-page' colspan='{$width}'>\n";
+  echo $properties['Body'][1] . "\n";
+  echo "<dl class='properties'>\n";
+  foreach ($properties as $name => $value)
+   {
+    if ($name != 'Visible' && $name != 'Special' && $name != 'Front-page' && $name != "Title" && $name != "Body")
+     if ($value[0] != 'File')
+      echo "<div><dt>{$name}</dt><dd>{$value[1]}</dd></div>";
+    elseif (   endsWith($value[1], '.jpg')
+	    || endsWith($value[1], '.png')
+	    || endsWith($value[1], '.gif'))
+     echo "<div><dt>{$name}</dt><dd><img src='{$scriptDirUrl}/files{$value[1]}' /></dd></div>";
+    else
+     echo "<div><dt>{$name}</dt><dd><a href='{$scriptDirUrl}/files{$value[1]}'>Download</a></dd></div>";
+   }
+  echo "</dl>\n";
+  echo "</td>\n";
+  echo "</tr>\n";
  ?>
-  <?php echo $properties['Body'][1]; ?>
-  <dl class="properties">
-   <?php
-    foreach ($properties as $name => $value)
-     {
-      if ($name != 'Visible' && $name != 'Special' && $name != 'Front-page' && $name != "Title" && $name != "Body")
-       if ($value[0] != 'File')
-	echo "<div><dt>{$name}</dt><dd>{$value[1]}</dd></div>";
-      elseif (   endsWith($value[1], '.jpg')
-	      || endsWith($value[1], '.png')
-	      || endsWith($value[1], '.gif'))
-       echo "<div><dt>{$name}</dt><dd><img src='{$scriptDirUrl}/files{$value[1]}' /></dd></div>";
-      else
-       echo "<div><dt>{$name}</dt><dd><a href='{$scriptDirUrl}/files{$value[1]}'>Download</a></dd></div>";
-     }
-   ?>
-  </dl>
- </td>
 </table>

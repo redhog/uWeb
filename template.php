@@ -45,4 +45,42 @@ function findTemplateClientPath($path, $template, $action, $type)
   global $scriptDirUrl;
   return $scriptDirUrl . findTemplate($path, $template, $action, $type);
  }
+
+function findTemplateSet($path, $templateSet, $action, $type)
+ {
+  global $scriptDir;
+  global $templatesdirs;
+
+  $res = array();
+  foreach ($templatesdirs as $templatesdir)
+   if (   file_exists($scriptDir . '/'. $templatesdir . '/' . $templateSet)
+       && ($dh = opendir($scriptDir . '/'. $templatesdir . '/' . $templateSet)))
+    {
+     while (($file = readdir($dh)) !== false)
+      if ($file != '.' && $file != '..' && ($template = findTemplate($path, $templateSet . '/' . $file, $action, $type)) != NULL)
+       $res[] = $template;
+     closedir($dh);
+    }
+  return $res;
+ }
+
+function findTemplateSetServerPath($path, $templateSet, $action, $type)
+ {
+  global $scriptDir;
+
+  $paths = array();
+  foreach (findTemplateSet($path, $templateSet, $action, $type) as $path)
+   $paths[] = $scriptDir . $path;
+  return $paths;
+ }
+
+function findTemplateSetClientPath($path, $templateSet, $action, $type)
+ {
+  global $scriptDirUrl;
+  $paths = array();
+  foreach (findTemplateSet($path, $templateSet, $action, $type) as $path)
+   $paths[] =  $scriptDirUrl . $path;
+  return $paths;
+ }
+
 ?>

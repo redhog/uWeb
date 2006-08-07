@@ -10,6 +10,12 @@
   <link href="<?php echo findTemplateClientPath($_SERVER["PATH_INFO"], "top-menu", $_GET["action"], "css"); ?>" rel="stylesheet" type="text/css" />
   <link href="<?php echo findTemplateClientPath($_SERVER["PATH_INFO"], "menu", $_GET["action"], "css"); ?>" rel="stylesheet" type="text/css" />
   <link href="<?php echo findTemplateClientPath($_SERVER["PATH_INFO"], "main", $_GET["action"], "css"); ?>" rel="stylesheet" type="text/css" />
+  <?php
+   foreach (findTemplateSetClientPath($_SERVER["PATH_INFO"], "libs", $_GET["action"], "css") as $template)
+    echo "<link href='$template' rel='stylesheet' type='text/css' />\n";
+   foreach (findTemplateSetClientPath($_SERVER["PATH_INFO"], "libs", $_GET["action"], "js") as $template)
+    echo "<script type='text/javascript' src='$template'></script>\n";
+  ?>
  </head>
  <body>
   <table class="page">

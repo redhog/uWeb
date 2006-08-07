@@ -120,25 +120,29 @@ function getObjects($path, $relation = 0, $requires = array(), $properties = NUL
   // $properties is either a list of properties to return, or NULL to return all
   global $dbconn;
 
-  $path = pg_escape_string($path);
-
+  if (!beginsWith($path, '/')) $path = '/' . $path; // Handle nasty cases...
   if ($relation == 0)
    $rel = $path;
   else
    {
-    if ($path != '/') $path .= '/';
+    if (!endsWith($path, '/')) $path .= '/';
     if ($relation == 1) $rel = "{$path}[^/]*";
     elseif ($relation == 2) $rel = "{$path}%";
    }
+  $rel = pg_escape_string($rel);
 
   $req = '';
   foreach ($requires as $name => $value)
-   $req .= " and exists (select *" .
-	   "              from object_property, property" .
-	   "              where     object_property.object = object_relation.object" .
-	   "                    and object_property.value = '{$value}'" .
-	   "                    and object_property.property = property.id" .
-	   "                    and property.name = '{$name}')";
+   {
+    $name = pg_escape_string($name);
+    $value = pg_escape_string($value);
+    $req .= " and exists (select *" .
+	    "              from object_property, property" .
+	    "              where     object_property.object = object_relation.object" .
+	    "                    and object_property.value = '{$value}'" .
+	    "                    and object_property.property = property.id" .
+	    "                    and property.name = '{$name}')";
+   }
 
   $prop = '';
   if ($properties !== NULL)
