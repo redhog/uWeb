@@ -1,23 +1,37 @@
-Short installation notes
--------------------------
+Contents
+---------
+
+1. Short installation notes
+2. Using uWeb
+3. Customizing uWeb
+3.1. How the templating work
+3.1.1. Template sets
+3.2. Objects
+
+
+1. Short installation notes
+----------------------------
+If you are running PHP4, you must install the PHP_Compat Pear package:
+'pear install PHP_Compat'.
+
 Install PostgreSQL support for PHP.
 
 You need to edit config.php to point to the database, and load
 uweb.sql into the db. If you want example data loaded to play with
-load uweb.data.sql aswell. Otherwize, run the sql-statement
+load uweb.data.sql aswell. Otherwise, run the sql-statement
 
 insert into account (name, password) values ('myusername', 'mypassword');
 
 
-Using uWeb
-------------
+2. Using uWeb
+--------------
 If you installed uWeb in http://myserver/uWeb, go to
 http://myserver/uWeb/uweb.php/ and click your way from there (PHP does
 not support PATH_INFO for index.php!).
 
 
-Customizing uWeb
------------------
+3. Customizing uWeb
+--------------------
 
 uWeb uses a list of template directories defined in the config-file
 with the $templatesdirs variable to create the design of the web-page.
@@ -32,8 +46,8 @@ You generally want to have "templates" as the last item in all but
 very strange cases, as that template provides good defaults.
 
 
-How the templating work
-------------------------
+3.1. How the templating work
+-----------------------------
 
 It's far easier to explain this by example. For this example, we
 assume $templatesdirs=array("my-site", "my-company", "templates").
@@ -65,8 +79,8 @@ my-company/page/boats/view.php
 my-company/page/view.php
 templates/page/boats/sailing-boats/wooden/view.php
 templates/page/boats/sailing-boats/view.php
-templates/boats/view.php
-templates/view.php
+templates/page/boats/view.php
+templates/page/view.php
 
 my-site/page/boats/sailing-boats/wooden/default.php
 my-site/page/boats/sailing-boats/default.php
@@ -78,17 +92,71 @@ my-company/page/boats/default.php
 my-company/page/default.php
 templates/page/boats/sailing-boats/wooden/default.php
 templates/page/boats/sailing-boats/default.php
-templates/boats/default.php
-templates/default.php
+templates/page/boats/default.php
+templates/page/default.php
 
 Note that templates with other extensions than .php can be loaded in
 the same manner, and that the action=view is assumed if no other
 action is specified. Other standard actions include "edit", "save",
 "log-in" and "log-in-save".
 
+To load templates, the functions findTemplateServerPath and
+findTemplateClientPath are used. The only difference between them is
+that the former returns a path that you can do require() on from
+within PHP, while the path returned by the latter one is suitable to
+include in a <script src=''> tag in the HTML you output.
 
-Objects
---------
+Example usages:
+require(findTemplateServerPath("/boats/sailing-boats/wooden", "page", "view", "php"));
+echo "<script src='" .findTemplateClientPath("/boats/sailing-boats/wooden", "page", "view", "css") . "'></script>";
+
+
+3.1.1. Template sets
+---------------------
+
+It is sometimes usefull to load a set of templates and concatenate
+them all. For example, such templates can provide "boxes" to show on
+the side of a web-page.
+
+Template sets works very much like templates, except you use the
+functions findTemplateSetServerPath and findTemplateSetClientPath
+instaed of findTemplateServerPath and findTemplateClientPath, and
+these functions return an array of template files instaed of a single
+file.
+
+Whil the template functions search for templates directly under e.g.
+my-company/page, the template set functions does a directory listing
+under each "template" director, and searches for templates in all of
+those.
+
+Example:
+
+findTemplateSetServerPath("/boats/sailing-boats/wooden", "boxes", "view", "php")
+
+will list the directories under
+
+my-site/boxes
+my-company/boxes
+templates/boxes
+
+say that the directories found are
+
+my-site/boxes/ticker
+my-site/boxes/search
+my-company/boxes/ticker
+templates/boxes/search
+templates/boxes/info
+
+then the return value of the above call will be
+
+array(
+ findTemplateServerPath("/boats/sailing-boats/wooden", "boxes/ticker", "view", "php"),
+ findTemplateServerPath("/boats/sailing-boats/wooden", "boxes/search", "view", "php"),
+ findTemplateServerPath("/boats/sailing-boats/wooden", "boxes/info", "view", "php"))
+
+
+3.2. Objects
+-------------
 
 Best explanation is to see any template that deals with objects
 ("object" and "children"). There is one "big" function that might
