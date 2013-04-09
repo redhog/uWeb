@@ -1,16 +1,4 @@
-Contents
----------
-
-1. Short installation notes
-2. Using uWeb
-3. Customizing uWeb
-3.1. How the templating work
-3.1.1. Template sets
-3.2. Objects
-
-
-1. Short installation notes
-----------------------------
+# Short installation notes
 If you are running PHP4, you must install the PHP_Compat Pear package:
 'pear install PHP_Compat'.
 
@@ -23,15 +11,13 @@ load uweb.data.sql aswell. Otherwise, run the sql-statement
 insert into account (name, password) values ('myusername', 'mypassword');
 
 
-2. Using uWeb
---------------
+# Using uWeb
 If you installed uWeb in http://myserver/uWeb, go to
 http://myserver/uWeb/uweb.php/ and click your way from there (PHP does
 not support PATH_INFO for index.php!).
 
 
-3. Customizing uWeb
---------------------
+# Customizing uWeb
 
 uWeb uses a list of template directories defined in the config-file
 with the $templatesdirs variable to create the design of the web-page.
@@ -46,8 +32,7 @@ You generally want to have "templates" as the last item in all but
 very strange cases, as that template provides good defaults.
 
 
-3.1. How the templating work
------------------------------
+## How the templating work
 
 It's far easier to explain this by example. For this example, we
 assume $templatesdirs=array("my-site", "my-company", "templates").
@@ -65,35 +50,35 @@ To load the "page" template for /boats/sailing-boats/wooden with
 action "view", the following files are searched for, in the order
 below, and the first one found is loaded:
 
-my-site/page/boats/sailing-boats/wooden/nonrecursive.view.php
-my-company/page/boats/sailing-boats/wooden/nonrecursive.view.php
-templates/page/boats/sailing-boats/wooden/nonrecursive.view.php
+    my-site/page/boats/sailing-boats/wooden/nonrecursive.view.php
+    my-company/page/boats/sailing-boats/wooden/nonrecursive.view.php
+    templates/page/boats/sailing-boats/wooden/nonrecursive.view.php
 
-my-site/page/boats/sailing-boats/wooden/view.php
-my-site/page/boats/sailing-boats/view.php
-my-site/page/boats/view.php
-my-site/page/view.php
-my-company/page/boats/sailing-boats/wooden/view.php
-my-company/page/boats/sailing-boats/view.php
-my-company/page/boats/view.php
-my-company/page/view.php
-templates/page/boats/sailing-boats/wooden/view.php
-templates/page/boats/sailing-boats/view.php
-templates/page/boats/view.php
-templates/page/view.php
+    my-site/page/boats/sailing-boats/wooden/view.php
+    my-site/page/boats/sailing-boats/view.php
+    my-site/page/boats/view.php
+    my-site/page/view.php
+    my-company/page/boats/sailing-boats/wooden/view.php
+    my-company/page/boats/sailing-boats/view.php
+    my-company/page/boats/view.php
+    my-company/page/view.php
+    templates/page/boats/sailing-boats/wooden/view.php
+    templates/page/boats/sailing-boats/view.php
+    templates/page/boats/view.php
+    templates/page/view.php
 
-my-site/page/boats/sailing-boats/wooden/default.php
-my-site/page/boats/sailing-boats/default.php
-my-site/page/boats/default.php
-my-site/page/default.php
-my-company/page/boats/sailing-boats/wooden/default.php
-my-company/page/boats/sailing-boats/default.php
-my-company/page/boats/default.php
-my-company/page/default.php
-templates/page/boats/sailing-boats/wooden/default.php
-templates/page/boats/sailing-boats/default.php
-templates/page/boats/default.php
-templates/page/default.php
+    my-site/page/boats/sailing-boats/wooden/default.php
+    my-site/page/boats/sailing-boats/default.php
+    my-site/page/boats/default.php
+    my-site/page/default.php
+    my-company/page/boats/sailing-boats/wooden/default.php
+    my-company/page/boats/sailing-boats/default.php
+    my-company/page/boats/default.php
+    my-company/page/default.php
+    templates/page/boats/sailing-boats/wooden/default.php
+    templates/page/boats/sailing-boats/default.php
+    templates/page/boats/default.php
+    templates/page/default.php
 
 Note that templates with other extensions than .php can be loaded in
 the same manner, and that the action=view is assumed if no other
@@ -107,12 +92,12 @@ within PHP, while the path returned by the latter one is suitable to
 include in a <script src=''> tag in the HTML you output.
 
 Example usages:
-require(findTemplateServerPath("/boats/sailing-boats/wooden", "page", "view", "php"));
-echo "<script src='" .findTemplateClientPath("/boats/sailing-boats/wooden", "page", "view", "css") . "'></script>";
+
+    require(findTemplateServerPath("/boats/sailing-boats/wooden", "page", "view", "php"));
+    echo "<script src='" .findTemplateClientPath("/boats/sailing-boats/wooden", "page", "view", "css") . "'></script>";
 
 
-3.1.1. Template sets
----------------------
+### Template sets
 
 It is sometimes usefull to load a set of templates and concatenate
 them all. For example, such templates can provide "boxes" to show on
@@ -131,32 +116,31 @@ those.
 
 Example:
 
-findTemplateSetServerPath("/boats/sailing-boats/wooden", "boxes", "view", "php")
+    findTemplateSetServerPath("/boats/sailing-boats/wooden", "boxes", "view", "php")
 
 will list the directories under
 
-my-site/boxes
-my-company/boxes
-templates/boxes
+    my-site/boxes
+    my-company/boxes
+    templates/boxes
 
 say that the directories found are
 
-my-site/boxes/ticker
-my-site/boxes/search
-my-company/boxes/ticker
-templates/boxes/search
-templates/boxes/info
+    my-site/boxes/ticker
+    my-site/boxes/search
+    my-company/boxes/ticker
+    templates/boxes/search
+    templates/boxes/info
 
 then the return value of the above call will be
 
-array(
- findTemplateServerPath("/boats/sailing-boats/wooden", "boxes/ticker", "view", "php"),
- findTemplateServerPath("/boats/sailing-boats/wooden", "boxes/search", "view", "php"),
- findTemplateServerPath("/boats/sailing-boats/wooden", "boxes/info", "view", "php"))
+    array(
+     findTemplateServerPath("/boats/sailing-boats/wooden", "boxes/ticker", "view", "php"),
+     findTemplateServerPath("/boats/sailing-boats/wooden", "boxes/search", "view", "php"),
+     findTemplateServerPath("/boats/sailing-boats/wooden", "boxes/info", "view", "php"))
 
 
-3.2. Objects
--------------
+## Objects
 
 Best explanation is to see any template that deals with objects
 ("object" and "children"). There is one "big" function that might
@@ -167,36 +151,28 @@ properties.
 
 It takes the following parameters:
 
-$path
- The path under which to perform the search, such as /boats/sailing-boats/wooden
+ * $path The path under which to perform the search, such as /boats/sailing-boats/wooden
 
-$relation
- Specifies how $path is interpreted:
- 0 means return the object specified by $path
- 1 means return all children of the object specified by $path
- 2 means return all descendants of the object specified by $path
+ * $relation Specifies how $path is interpreted:
+   * 0 means return the object specified by $path
+   * 1 means return all children of the object specified by $path
+   * 2 means return all descendants of the object specified by $path
 
-$requires
- Restricts objects returned to ones having some specific properties
- set. E.g. to only return objects that are both visible and have the
- title "Blurb", set $requires to array("Visible => "yes", "Title" =>
- "Blurb").
+ * $requires Restricts objects returned to ones having some specific properties set. E.g. to only return objects that are both visible and have the title "Blurb", set $requires to array("Visible => "yes", "Title" => "Blurb").
 
-$properties
- List of properties to include in the output, or NULL to include all
- properties.
+ *$properties List of properties to include in the output, or NULL to include all properties.
 
 The return value is easies explained by an example (again):
 
-array(
- 4711 => array('paths' => array('/boats/sailing-boats/wooden/sskaukasus', '/boats/large/sskaukasus'),
-               'properties' => array('Visible' => 'yes',
-                                     'Title' => 'S/S Kaukasus',
-                                     'Body' => 'S/S Kaukasus is one of our fines wooden +12m long boats with a total of 60m^s sail area.'))
- 4712 => array('paths' => array('/boats/sailing-boats/metal/ssmaria', '/boats/small/ssmaria'),
-               'properties' => array('Visible' => 'yes',
-                                     'Title' => 'S/S Maria',
-                                     'Body' => 'S/S Maria is a 6m long easy-sailed boat perfect for the first-timer')))
+    array(
+     4711 => array('paths' => array('/boats/sailing-boats/wooden/sskaukasus', '/boats/large/sskaukasus'),
+                   'properties' => array('Visible' => 'yes',
+                                         'Title' => 'S/S Kaukasus',
+                                         'Body' => 'S/S Kaukasus is one of our fines wooden +12m long boats with a total of 60m^s sail area.'))
+     4712 => array('paths' => array('/boats/sailing-boats/metal/ssmaria', '/boats/small/ssmaria'),
+                   'properties' => array('Visible' => 'yes',
+                                         'Title' => 'S/S Maria',
+                                         'Body' => 'S/S Maria is a 6m long easy-sailed boat perfect for the first-timer')))
 
 (here 4711 and 4712 are the object identifiers of the objects. You
 will usually not use these numbers, but the paths to the objects, e.g.
