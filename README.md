@@ -89,7 +89,7 @@ To load templates, the functions findTemplateServerPath and
 findTemplateClientPath are used. The only difference between them is
 that the former returns a path that you can do require() on from
 within PHP, while the path returned by the latter one is suitable to
-include in a <script src=''> tag in the HTML you output.
+include in a script tag in the HTML you output.
 
 Example usages:
 
