@@ -1,16 +1,5 @@
-body {
- display: table;
- border-spacing: 15px;
- padding: 0px;
- margin: 0px;
-}
-
-.main {
- display: table-cell;
- border-style: solid;
- border-width: 1px;
- border-color: #000000;
- padding: 10px;
+td.main {
+ height: 100%;
 }
 
 .children {
@@ -21,6 +10,10 @@ body {
 }
 
 h1:first-child { margin-top: 0px; }
+
+.image {
+ float: right;
+}
 
 dl.properties {
  display: table;

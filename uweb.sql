@@ -1,3 +1,4 @@
+drop table account;
 drop table object_property;
 drop table object_relation;
 drop table object;
@@ -37,14 +38,28 @@ create table object_property (
  value varchar not null
 );
 
+create table account (
+ id serial primary key not null,
+ name varchar not null,
+ password varchar not null
+);
+
 insert into property_type (name) values ('String');
 insert into property_type (name) values ('Integer');
 insert into property_type (name) values ('Real');
 insert into property_type (name) values ('Selection');
 insert into property_type (name) values ('Boolean');
 insert into property_type (name) values ('File');
-insert into object default values;
-insert into object_relation select currval('object_id_seq'), '/', currval('object_id_seq');
 
+insert into property (type, name) select property_type.id, 'Visible' from property_type where property_type.name = 'Boolean';
 insert into property (type, name) select property_type.id, 'Title' from property_type where property_type.name = 'String';
 insert into property (type, name) select property_type.id, 'Body' from property_type where property_type.name = 'String';
+insert into property (type, name) select property_type.id, 'Icon' from property_type where property_type.name = 'File';
+insert into property (type, name) select property_type.id, 'Image' from property_type where property_type.name = 'File';
+insert into property (type, name) select property_type.id, 'Special' from property_type where property_type.name = 'Boolean';
+insert into property (type, name) select property_type.id, 'Front-page' from property_type where property_type.name = 'Boolean';
+
+insert into object default values;
+insert into object_relation select currval('object_id_seq'), '/', currval('object_id_seq');
+insert into object_property select currval('object_id_seq'), property.id, 'yes' from property where property.name = 'Visible';
+insert into object_property select currval('object_id_seq'), property.id, 'Home' from property where property.name = 'Title';

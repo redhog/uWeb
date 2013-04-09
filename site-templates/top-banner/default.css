@@ -1,0 +1,12 @@
+td.top-banner {
+ padding: 0px;
+ background: url("top0.5.png");
+}
+
+.left {
+ float: left;
+}
+
+.right {
+ float: right;
+}
