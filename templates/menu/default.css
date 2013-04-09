@@ -1,10 +1,5 @@
-.menu {
- display: table-cell;
- width: 20%;
- border-style: solid;
- border-width: 1px;
- border-color: #000000;
- padding: 10px;
+td.menu {
+ height: 100%;
 }
 
 .menu ul {

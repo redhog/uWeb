@@ -1,0 +1,90 @@
+td.main {
+ padding: 20px;
+ height: 100%;
+}
+
+h1:first-child { margin-top: 0px; }
+
+.image {
+ float: right;
+ border-style: solid;
+ border-width: 4px;
+ border-color: #c2e2f2;
+}
+
+dl.properties {
+ display: table;
+ border-spacing: 10px;
+}
+
+dl.properties > div {
+ display: table-row;
+}
+
+dl.properties > div > dt {
+ display: table-cell;
+ font-variant: small-caps;
+ vertical-align: top;
+}
+
+dl.properties > div > dd {
+ display: table-cell;
+ vertical-align: top;
+}
+
+.children table {
+ border-spacing: 0px;
+}
+
+.children td {
+ padding: 10px;
+ font-family: sans-serif;
+ font-size: 10pt;
+ font-weight: bold;
+ background-color: #c2e2f2;
+}
+
+.children a {
+ text-decoration: none;
+}
+
+.children a:link {
+ color: #444444;
+}
+
+.children a:visited {
+ color: #444444;
+}
+
+.children a:hover {
+ color: #ffffff;
+}
+
+table.front-page {
+ border-spacing: 15px;
+}
+
+.front-page td {
+ padding: 0px;
+ background-color: #1f3b9f;
+ color: #ffffff;
+ text-align: center;
+}
+
+.front-page img {
+ border-style: solid;
+ border-width: 3px;
+ border-color: #ffffff;
+}
+
+.front-page a:visited {
+ color: #ffffff;
+ font-family: sans-serif;
+ text-decoration: none;
+}
+
+.front-page a:link {
+ color: #ffffff;
+ font-family: sans-serif;
+ text-decoration: none;
+}
